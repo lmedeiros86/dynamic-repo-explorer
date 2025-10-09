@@ -1,5 +1,5 @@
 import axios, { type AxiosResponse } from 'axios';
-import { GitHubRepo, GitHubUser } from '../types/github';
+import { GitHubRepo, GitHubUser } from '@/types/github';
 
 class GitHubService {
     private readonly BASE_URL = 'https://api.github.com';
