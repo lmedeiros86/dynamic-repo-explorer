@@ -58,7 +58,7 @@ export const getReposByOwner = async (req: Request, res: Response) => {
  * This endpoint provides aggregated statistics for all repositories owned by the specified GitHub user,
  * including total count, stars, forks, and a list of unique programming languages used across repositories.
  */
-export const getReposStats = async (req: Request, res: Response) => {
+export const getRepoStats = async (req: Request, res: Response) => {
     try {
         const { owner } = req.params;
 
