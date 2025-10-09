@@ -15,6 +15,7 @@ export interface GitHubRepo {
     clone_url: string;
     stargazers_count: number;
     watchers_count: number;
+    forks_count: number;
     language: string | null;
     default_branch: string;
     owner: {
@@ -44,4 +45,10 @@ export interface GitHubUser {
     following: number;
     created_at: string;
     updated_at: string;
+}
+
+export interface ApiResponse<T = any> {
+    success: boolean;
+    data?: T;
+    error?: string;
 }
