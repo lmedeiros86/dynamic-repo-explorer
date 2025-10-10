@@ -25,31 +25,42 @@ interface RepoItemProps {
 
 const RepoItem: React.FC<RepoItemProps> = ({ repo }) => {
     return (
-        <div className="repo-card">
-            <h3>
-                <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
+        <div className="bg-gray-800 border border-gray-700 rounded-lg p-4 transition-all hover:border-gray-600">
+            <h3 className="mb-2">
+                <a 
+                    href={repo.html_url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-xl font-semibold text-blue-400 hover:text-blue-300 hover:underline"
+                >
                     {repo.name}
                 </a>
             </h3>
-            <p className="repo-description">
+            <p className="text-gray-300 mb-3 leading-relaxed">
                 {repo.description || 'No description provided'}
             </p>
-            <div className="repo-stats">
-                <span className="stat">
-                    {repo.stargazers_count}
+            <div className="flex flex-wrap gap-2 mb-3">
+                <span className="bg-gray-700 text-gray-200 text-xs px-2 py-1 rounded">
+                    ⭐ {repo.stargazers_count.toLocaleString()}
                 </span>
-                <span className="stat">
-                    {repo.forks_count}
+                <span className="bg-gray-700 text-gray-200 text-xs px-2 py-1 rounded">
+                    🍴 {repo.forks_count.toLocaleString()}
                 </span>
-                <span className="stat">
-                    {repo.watchers_count}
+                <span className="bg-gray-700 text-gray-200 text-xs px-2 py-1 rounded">
+                    👁️ {repo.watchers_count.toLocaleString()}
                 </span>
-                <span className="stat">
-                    {repo.language || 'No language'}
-                </span>
+                {repo.language && (
+                    <span className="bg-gray-700 text-gray-200 text-xs px-2 py-1 rounded">
+                        {repo.language}
+                    </span>
+                )}
             </div>
-            <p className="repo-updated">
-                Updated: {new Date(repo.updated_at).toLocaleDateString()}
+            <p className="text-xs text-gray-400 mt-2">
+                Updated: {new Date(repo.updated_at).toLocaleDateString(undefined, { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                })}
             </p>
         </div>
     );

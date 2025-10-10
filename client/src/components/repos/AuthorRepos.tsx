@@ -56,26 +56,35 @@ const AuthorRepos: React.FC = () => {
     };
 
     return (
-        <div className="autho-repos">
-            <form onSubmit={handleSubmit} className="search-form">
-                <input
-                    type="text"
-                    value={owner}
-                    onChange={(e) => setOwner(e.target.value)}
-                    placeholder="Enter GitHub username"
-                    className="search-input"
-                />
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="search-button"
-                >
-                    {loading ? 'Loading...' : 'Search Repositories'}
-                </button>
+        <div className="w-full max-w-4xl mx-auto p-4">
+            <form 
+                onSubmit={handleSubmit} 
+                className="bg-gray-800 p-5 rounded-lg shadow-md my-5"
+            >
+                <div className="flex flex-col sm:flex-row gap-3">
+                    <input
+                        type="text"
+                        value={owner}
+                        onChange={(e) => setOwner(e.target.value)}
+                        placeholder="Enter GitHub username"
+                        className="px-4 py-3 rounded border-2 border-gray-600 bg-gray-700 text-white focus:outline-none focus:border-blue-500 flex-grow"
+                    />
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className={`px-6 py-3 rounded font-medium transition-colors ${
+                            loading 
+                                ? 'bg-gray-600 cursor-not-allowed' 
+                                : 'bg-blue-600 hover:bg-blue-700'
+                        } text-white`}
+                    >
+                        {loading ? 'Loading...' : 'Search Repositories'}
+                    </button>
+                </div>
             </form>
 
             {error && (
-                <div className="error-message">
+                <div className="bg-red-500 text-white p-3 rounded-md my-4">
                     <p>Error: {error}</p>
                 </div>
             )}

@@ -4,12 +4,13 @@
  * Provides functions to make authenticated requests to the backend API.
  */
 
-import * as axios from 'axios';
+import axios from 'axios';
 import { RepoResponse } from '../types/repo';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+// Vite uses import.meta.env for environment variables
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
-const api = axios.create({
+const api = axios.create({ // This creates an axios instance with custom config
     baseURL: API_BASE_URL,
     timeout: 10000,
 });
