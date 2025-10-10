@@ -1,0 +1,151 @@
+.App {
+    text-align: center;
+}
+
+.App-header {
+    background-color: #282c34;
+    padding: 20px;
+    color: white;
+    min-height: 100vh;
+    text-align: left;
+}
+
+.search-form {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #1a1d23;
+    border-radius: 8px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #444;
+    border-radius: 4px;
+    width: 300px;
+    background-color: #333;
+    color: white;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #007acc;
+}
+
+.search-button {
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #007acc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover:not(:disabled) {
+    background-color: #005a9e;
+}
+
+.search-button:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+}
+
+.error-message {
+    background-color: #ff4444;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.repo-list {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.repo-list h2 {
+    margin-bottom: 20px;
+}
+
+.repo-card {
+    background-color: #1a1d23;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.repo-card h3 {
+    margin: 0 0 10px 0;
+}
+
+.repo-card h3 a {
+    color: #61dafb;
+    text-decoration: none;
+}
+
+.repo-card h3 a:hover {
+    text-decoration: underline;
+}
+
+.repo-description {
+    color: #ccc;
+    margin: 10px 0;
+    line-height: 1.4;
+}
+
+.repo-stats {
+    display: flex;
+    gap: 15px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+.stat {
+    background-color: #333;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.repo-updated {
+    color: #999;
+    font-size: 12px;
+    margin: 10px 0 0 0;
+}
+
+.no-results {
+    text-align: center;
+    padding: 40px;
+    color: #ccc;
+}
+
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    .repo-list {
+        padding: 10px;
+    }
+}
