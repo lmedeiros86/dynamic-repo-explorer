@@ -3,46 +3,76 @@ node_modules/
 .pnp
 .pnp.js
 
-# Testing
-coverage/
-
-# Production
-build/
+# Build output
 dist/
+dist-ssr/
+build/
+out/
 .next/
-.out/
+.nuxt/
+
+# Cache directories
+.cache/
+.parcel-cache
+.vite/
+.vercel
+.turbo/
+
+# Environment variables
+.env
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# Local development
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# TypeScript cache
-*.tsbuildinfo
+pnpm-debug.log*
 
 # Editor directories and files
-.idea/
-.vscode/
+.idea
+.vscode/*
+!.vscode/extensions.json
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-# OS generated files
+# System files
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Coverage directory
+coverage/
+.nyc_output
+
+# Local development
+*.local
+
+# TypeScript
+*.tsbuildinfo
+*.tsbuildinfo.local
+
+# Vite
+
+# Testing
+/coverage
+/cypress/screenshots/
+/cypress/videos/
+
+# Misc
+.cache
+.temp
+.tmp
+.temp/
+.tmp/
 
 # Optional npm cache directory
 .npm
@@ -59,50 +89,39 @@ Thumbs.db
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
 
 # Next.js build output
 .next
+out
 
-# Vercel
-.vercel
+# Nuxt.js build / generate output
+.nuxt
+dist
 
-# VSCode
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
+# Gatsby files
+public
 
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
+# vuepress build output
+.vuepress/dist
 
-# IDE specific files
-.idea/
-*.swp
-*.swo
+# Serverless directories
+.serverless/
 
-# Build outputs
-build/
-dist/
-.next/
-out/
+# FuseBox cache
+.fusebox/
 
-# Environment variables
-.env*.local
+# DynamoDB Local files
+.dynamodb/
 
-# TypeScript declaration maps
-*.d.ts.map
+# TernJS port file
+.tern-port
 
-# Optional stylelint cache
-.stylelintcache
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test/
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*

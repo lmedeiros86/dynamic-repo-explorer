@@ -27,18 +27,23 @@ interface RepoListProps {
 const RepoList: React.FC<RepoListProps> = ({ repositories, owner }) => {
     if (repositories.length === 0) {
         return (
-            <div className="no-results">
+            <div className="text-center p-10 text-gray-400">
                 <p>No repositories found for {owner}</p>
             </div>
         );
     }
 
     return (
-        <div className="repo-list">
-            <h2>Repositories for {owner} ({repositories.length})</h2>
-            {repositories.map((repo) => (
-                <RepoItem key={repo.id} repo={repo} />
-            ))}
+        <div className="w-full max-w-4xl mx-auto py-4">
+            <h2 className="text-2xl font-semibold mb-6 text-white">
+                Repositories for {owner} 
+                <span className="text-gray-400 ml-2">({repositories.length})</span>
+            </h2>
+            <div className="space-y-4">
+                {repositories.map((repo) => (
+                    <RepoItem key={repo.id} repo={repo} />
+                ))}
+            </div>
         </div>
     );
 };
