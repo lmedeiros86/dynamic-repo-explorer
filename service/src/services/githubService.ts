@@ -12,6 +12,7 @@ class GitHubService {
             headers: {
                 'Accept': 'application/vnd.github.v3+json',
                 'User-Agent': 'dynamic-repo-explorer',
+                'Authorization': `token ${process.env.GITHUB_TOKEN}`
             }
         });
     }
