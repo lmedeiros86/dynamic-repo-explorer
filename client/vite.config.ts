@@ -1,9 +1,13 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-const tailwindcss = require('tailwindcss');
-const autoprefixer = require('autoprefixer');
+import type { Config as TailwindConfig } from 'tailwindcss';
+import tailwindConfig from './tailwind.config';
 
-// https://vitejs.dev/config/
+// PostCSS plugins
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+
 export default defineConfig({
   plugins: [react()],
   server: {
@@ -13,9 +17,22 @@ export default defineConfig({
   css: {
     postcss: {
       plugins: [
-        tailwindcss(),
+        tailwindcss(tailwindConfig as TailwindConfig),
         autoprefixer(),
       ],
+    },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.ts',
+    // Add this to handle CSS imports in tests
+    css: true,
+    // Add any other test-specific configurations
+    include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    // Add this to handle CSS modules
+    deps: {
+      inline: ['@testing-library/user-event'],
     },
   },
 });
