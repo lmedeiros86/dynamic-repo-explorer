@@ -5,8 +5,8 @@ import type { Config as TailwindConfig } from 'tailwindcss';
 import tailwindConfig from './tailwind.config';
 
 // PostCSS plugins
-import * as tailwindcss from 'tailwindcss';
-import * as autoprefixer from 'autoprefixer';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 
 export default defineConfig({
   plugins: [react()],

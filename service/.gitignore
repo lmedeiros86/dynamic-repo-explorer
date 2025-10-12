@@ -1,25 +1,58 @@
-# Dependencies
-node_modules/
-
-# Environment variables
+# =========================
+# Environment Variables
+# =========================
+# Local environment files
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.example
+!.env.*.example
+
+# Service-specific environment files
 service/.env
-service/.env.example
+service/.env.*
+!service/.env.example
+!service/.env.*.example
 
-# Coverage
+# =========================
+# Dependencies
+# =========================
+node_modules/
+.pnp
+.pnp.js
+.yarn-integrity
+
+# =========================
+# Build Outputs
+# =========================
+dist/
+build/
+*.tsbuildinfo
+.next/
+out/
+
+# =========================
+# Testing & Coverage
+# =========================
 coverage/
+.nyc_output/
+*.lcov
+.jest/
 
+# =========================
 # Logs
+# =========================
+logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
 
-# OS generated files
+# =========================
+# OS Generated Files
+# =========================
+# macOS
 .DS_Store
 .DS_Store?
 ._*
@@ -28,23 +61,28 @@ yarn-error.log*
 ehthumbs.db
 Thumbs.db
 
-# Compiled JavaScript
-dist/
-dist/**/*
+# Windows
+Desktop.ini
 
-# TypeScript build outputs
-*.tsbuildinfo
-
-# IDE files
-.vscode/
+# =========================
+# Editor Directories and Files
+# =========================
+.vscode/*
+!.vscode/extensions.json
 .idea/
-*.swp
-*.swo
-*~
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# Temporary files
+# =========================
+# Temporary Files
+# =========================
 tmp/
 temp/
-
-# Testing
-.nyc_output/
+*.tmp
+*.bak
+*.swp
+*~
+*.swo
