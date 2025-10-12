@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../src/app';
+import { app } from '@/app';
 
 describe('GitHub Repository API', () => {
     describe('GET /api/repos/:owner', () => {
@@ -32,7 +32,7 @@ describe('GitHub Repository API', () => {
                 .expect(404);
 
             expect(response.body.success).toBe(false);
-            expect(response.body.error).toBe('User not found');
+            expect(response.body.error).toBe('Not Found');
         }, 15000);
     });
 

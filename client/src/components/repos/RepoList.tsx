@@ -44,8 +44,20 @@ const RepoList = ({
     onPageChange 
 }: RepoListProps): ReactElement => {
     const [sortBy, setSortBy] = useState<SortOption>('stars-desc');
+    const [searchQuery, setSearchQuery] = useState('');
     const [repositories, setRepositories] = useState<GitHubRepo[]>(initialRepositories);
+    const [filteredRepos, setFilteredRepos] = useState<GitHubRepo[]>(initialRepositories);
     const [isLoading, setIsLoading] = useState(false);
+    const debounceTimerRef = React.useRef<number | null>(null);
+    
+    // Cleanup function to clear any pending timeouts when component unmounts
+    useEffect(() => {
+        return () => {
+            if (debounceTimerRef.current !== null) {
+                clearTimeout(debounceTimerRef.current);
+            }
+        };
+    }, []);
     const [pagination, setPagination] = useState<PaginationInfo>(initialPagination || {
         currentPage: 1,
         perPage: 10,
@@ -108,8 +120,57 @@ const RepoList = ({
         }
     }, [initialRepositories]);
 
+    // Handle search functionality
+    const handleSearch = async (query: string) => {
+        setSearchQuery(query);
+        
+        // If there's a search query, fetch new results, otherwise reset to initial repositories
+        if (query.trim()) {
+            try {
+                setIsLoading(true);
+                const response = await fetch(`/api/repos/${owner}?q=${encodeURIComponent(query)}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setRepositories(data.repositories);
+                    setFilteredRepos(data.repositories);
+                    // Reset to first page when searching
+                    if (onPageChange) {
+                        onPageChange(1, pagination.perPage);
+                    }
+                }
+            } catch (error) {
+                console.error('Error searching repositories:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        } else {
+            // If search is cleared, reset to initial repositories
+            setFilteredRepos(repositories);
+        }
+    };
+
+    // Debounced search
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        
+        if (debounceTimerRef.current) {
+            clearTimeout(debounceTimerRef.current);
+        }
+        
+        // Only trigger search if there's a query
+        if (query.trim()) {
+            debounceTimerRef.current = window.setTimeout(() => {
+                handleSearch(query);
+            }, 300);
+        } else {
+            // If query is empty, reset to initial repositories immediately
+            setFilteredRepos(repositories);
+        }
+    };
+
     const sortedRepos = useMemo(() => {
-        return [...repositories].sort((a, b) => {
+        return [...filteredRepos].sort((a, b) => {
             switch (sortBy) {
                 case 'stars-asc':
                     return (a.stargazers_count || 0) - (b.stargazers_count || 0);
@@ -123,7 +184,7 @@ const RepoList = ({
                     return 0;
             }
         });
-    }, [repositories, sortBy]);
+    }, [filteredRepos, sortBy]);
 
 
     if (isLoading && repositories.length === 0) {
@@ -157,11 +218,11 @@ const RepoList = ({
                         {owner}
                     </a>
                 </h2>
-                <div className="flex items-center space-x-2 mt-2 sm:mt-0">
-                    <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-900/50 text-blue-300 border border-blue-700/50">
-                        <span className="font-mono font-bold text-blue-200">{repositories.length}</span> {repositories.length === 1 ? 'Repository' : 'Repositories'}
-                    </span>
-                </div>
+            </div>
+            <div className="flex items-center space-x-2 mt-2 sm:mt-0">
+                <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-900/50 text-blue-300 border border-blue-700/50">
+                    <span className="font-mono font-bold text-blue-200">{repositories.length}</span> {repositories.length === 1 ? 'Repository' : 'Repositories'}
+                </span>
             </div>
             <div className="mb-6">
                 <div className="flex justify-between items-center mb-4">
@@ -177,24 +238,59 @@ const RepoList = ({
                         <option value="name-desc">Name (Z-A)</option>
                     </select>
                 </div>
-                <div className="space-y-4 mb-6">
+                <div className="relative mb-4">
+                    <input
+                        type="text"
+                        placeholder="Search repositories..."
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-800 dark:text-white transition-colors"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                const query = searchQuery.trim();
+                                if (debounceTimerRef.current) {
+                                    clearTimeout(debounceTimerRef.current);
+                                    debounceTimerRef.current = null;
+                                }
+                                if (query) {
+                                    handleSearch(query);
+                                } else {
+                                    setFilteredRepos(repositories);
+                                }
+                            }
+                        }}
+                        aria-label="Search repositories"
+                    />
+                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    {searchQuery && (
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setSearchQuery('');
+                                setFilteredRepos(repositories);
+                            }}
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                            aria-label="Clear search"
+                            type="button"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    )}
+                </div>
+                <div className="space-y-4">
                     {isLoading ? (
                         <div className="flex justify-center items-center h-32">
-                            <FaSpinner className="animate-spin text-blue-500 text-2xl" />
+                            {/* Add loading spinner or skeleton here */}
                         </div>
                     ) : (
-                        <>
-                            {sortedRepos.map((repo) => (
-                                <RepoItem key={repo.id} repo={repo} />
-                            ))}
-                            
-                            {/* Pagination Controls */}
-                            <div className="flex flex-col sm:flex-row justify-between items-center mt-8 space-y-4 sm:space-y-0">
-                                <div className="text-sm text-gray-400">
-                                    Showing all {repositories.length} repositories
-                                </div>
-                            </div>
-                        </>
+                        sortedRepos.map((repo) => <RepoItem key={repo.id} repo={repo} />)
                     )}
                 </div>
             </div>
