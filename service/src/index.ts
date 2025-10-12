@@ -1,13 +1,17 @@
-// Express server and starts it listening on a specified port.
-// The port is determined by the PORT environment variable, or 5000 if it is not set.
-// Once the server is running, a message is logged to the console indicating the port it is listening on.
-import app from './app';
+// Import the Express app instance from app.ts
+import { app } from './app.js';
+// Import dotenv for environment variable configuration
+import dotenv from 'dotenv';
 
-const PORT = process.env.PORT || 5000;
+// Load environment variables from .env file
+dotenv.config();
 
+// Set the server port from environment variables or default to 3000
+const PORT = process.env.PORT || 3001;
+
+// Start the Express server
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
 
-// Export the Express app instance, allowing it to be imported and used elsewhere.
 export default app;

@@ -25,6 +25,13 @@ export interface RepoResponse {
         owner: string;
         repositories: GitHubRepo[];
         count: number;
+        pagination?: {
+            currentPage: number;
+            perPage: number;
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            totalCount: number;
+        };
     };
     error?: string;
 }
