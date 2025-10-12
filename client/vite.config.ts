@@ -5,18 +5,29 @@ import type { Config as TailwindConfig } from 'tailwindcss';
 import tailwindConfig from './tailwind.config';
 
 // PostCSS plugins
-import tailwindcss from 'tailwindcss';
-import autoprefixer from 'autoprefixer';
+import * as tailwindcss from 'tailwindcss';
+import * as autoprefixer from 'autoprefixer';
 
 export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-    open: true
+    open: true,
+    strictPort: true,
+    host: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        secure: false
+      }
+    },
+    cors: true
   },
   css: {
     postcss: {
       plugins: [
+        // @ts-ignore - TypeScript doesn't recognize the default import properly
         tailwindcss(tailwindConfig as TailwindConfig),
         autoprefixer(),
       ],

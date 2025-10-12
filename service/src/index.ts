@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Set the server port from environment variables or default to 3000
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
 // Start the Express server
 app.listen(PORT, () => {
