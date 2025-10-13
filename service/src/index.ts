@@ -1,5 +1,8 @@
+// Register module aliases
+import 'module-alias/register';
+
 // Import the Express app instance from app.ts
-import { app } from './app.js';
+import { app } from '@/app';
 // Import dotenv for environment variable configuration
 import dotenv from 'dotenv';
 
