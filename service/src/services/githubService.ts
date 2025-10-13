@@ -128,12 +128,8 @@ class GitHubService implements IGitHubService {
             headers: {
                 'Accept': 'application/vnd.github.v3+json',
                 'User-Agent': 'dynamic-repo-explorer',
-<<<<<<< HEAD
-                'Authorization': `token ${process.env.GITHUB_TOKEN}`
-=======
                 'X-GitHub-Api-Version': '2022-11-28',
                 ...(githubToken && { 'Authorization': `token ${githubToken}` })
->>>>>>> cb49d29 (feat: complete backend implementation with tests and error handling)
             }
         });
 
