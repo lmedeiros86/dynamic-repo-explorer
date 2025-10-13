@@ -165,22 +165,30 @@ const RepoList = ({
                 </div>
             </div>
             <div className="mb-6">
-                <div className="flex justify-end mb-4">
-                    <div className="w-full sm:w-auto">
-                        <label htmlFor="sort-repos" className="block text-sm font-medium text-gray-300 mb-1">
-                            Sort by
+                <div className="flex justify-end mb-6">
+                    <div className="relative w-full sm:w-64">
+                        <label htmlFor="sort-repos" className="block text-sm font-medium text-gray-400 mb-1.5">
+                            Sort Repositories
                         </label>
-                        <select 
-                            id="sort-repos"
-                            className="w-full sm:w-auto px-4 py-2 border rounded-md bg-gray-800 text-white border-gray-600"
-                            value={sortBy}
-                            onChange={(e) => setSortBy(e.target.value as SortOption)}
-                        >
-                            <option value="stars-desc">Most Stars</option>
-                            <option value="stars-asc">Fewest Stars</option>
-                            <option value="name-asc">Name (A-Z)</option>
-                            <option value="name-desc">Name (Z-A)</option>
-                        </select>
+                        <div className="relative">
+                            <select 
+                                id="sort-repos"
+                                className="appearance-none w-full px-4 py-2.5 pr-10 rounded-lg border border-gray-600 bg-gray-800 text-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 cursor-pointer hover:bg-gray-750"
+                                value={sortBy}
+                                onChange={(e) => setSortBy(e.target.value as SortOption)}
+                                aria-label="Sort repositories"
+                            >
+                                <option value="stars-desc" className="bg-gray-800">Most Stars</option>
+                                <option value="stars-asc" className="bg-gray-800">Fewest Stars</option>
+                                <option value="name-asc" className="bg-gray-800">Name (A-Z)</option>
+                                <option value="name-desc" className="bg-gray-800">Name (Z-A)</option>
+                            </select>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="space-y-4">
